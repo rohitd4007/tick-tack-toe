@@ -65,20 +65,26 @@
     font-size: 1rem;
     border: none;
     border-radius: 8px;
-    background: linear-gradient(90deg, #f30051 60%, #ff0000 100%);
-    color: #fff;
     font-weight: 700;
+    color: #fff;
     cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0, 112, 243, 0.08);
-    transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
     outline: none;
 }
 
-.lobby button:hover,
-.lobby button:focus {
-    background: linear-gradient(90deg, #0051a8 60%, #009ec3 100%);
-    transform: translateY(-2px) scale(1.04);
-    box-shadow: 0 4px 16px rgba(0, 112, 243, 0.12);
+.create {
+    background: linear-gradient(90deg, #f30051 60%, #ff0000 100%);
+}
+
+.join {
+    background: linear-gradient(90deg, #f36100e9 60%, #ff5e00 100%);
+}
+
+.lobby button:disabled {
+    background: #f3f3f3;
+    pointer-events: none;
+    color: #bbb;
+    border: 2.5px solid #e0e0e0;
+    opacity: 0.7;
 }
 
 .lobby p {

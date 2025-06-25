@@ -30,15 +30,14 @@ export default function Lobby({ onGameStart }) {
 
     return (
         <div className={styles.lobby}>
-            <h2>Multiplayer Tic-Tac-Toe</h2>
             <div className={styles.buttons}>
-                <button onClick={createRoom}>Create Room</button>
+                <button className={styles.create} onClick={createRoom}>Create Room</button>
                 <input
                     placeholder="Enter Room Code"
                     value={roomCode}
                     onChange={(e) => setRoomCode(e.target.value)}
                 />
-                <button onClick={joinRoom}>Join Room</button>
+                <button className={styles.join} onClick={joinRoom} disabled={!roomCode.trim()}>Join Room</button>
             </div>
             <p>{status}</p>
         </div>

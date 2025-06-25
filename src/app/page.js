@@ -54,7 +54,7 @@ export default function Home() {
   return (
     <div className="main-bg">
       <header className="ttt-header">
-        <h1>Tic-Tac-Toe Online</h1>
+        <h1>Tic-Tac-Toe </h1>
       </header>
       <div className="ttt-container">
         {!roomData ? (
