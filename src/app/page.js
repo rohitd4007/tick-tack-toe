@@ -1,95 +1,63 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client"
+import { useEffect, useState } from 'react';
+import Lobby from '../components/Lobby/Lobby';
+import Board from '../components/Board/Board';
+import socket from '../Utils/socket';
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.js</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [roomData, setRoomData] = useState(null);
+  const [board, setBoard] = useState([]);
+  const [myTurn, setMyTurn] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
+  const [symbol, setSymbol] = useState('X');
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+  useEffect(() => {
+    socket.on('updateBoard', ({ board, currentTurn }) => {
+      setBoard(board);
+      setMyTurn(currentTurn === socket.id);
+    });
+
+    socket.on('gameOver', ({ board, winner }) => {
+      setBoard(board);
+      setGameOver(true);
+      setTimeout(() => alert(winner === 'Draw' ? 'It\'s a Draw!' : `Winner: ${winner}`), 100);
+    });
+
+    socket.on('playerLeft', (msg) => {
+      alert(msg);
+      setRoomData(null);
+      setBoard([]);
+      setGameOver(false);
+    });
+
+    return () => socket.removeAllListeners();
+  }, []);
+
+  const handleGameStart = ({ roomCode, board, currentTurn, players }) => {
+    console.log('game started', board, players, currentTurn)
+    setRoomData({ roomCode, players });
+    setBoard(board);
+    setSymbol(socket.id === players[0] ? 'X' : 'O');
+    setMyTurn(currentTurn === socket.id);
+  };
+
+  const handleMove = (index) => {
+    if (!gameOver) {
+      socket.emit('makeMove', { roomCode: roomData.roomCode, index });
+    }
+  };
+
+  return (
+    <div style={{ textAlign: 'center' }}>
+      {!roomData ? (
+        <Lobby onGameStart={handleGameStart} />
+      ) : (
+        <>
+          <h2>You are {symbol}</h2>
+          <h3>{gameOver ? 'Game Over' : myTurn ? 'Your Turn' : "Opponent's Turn"}</h3>
+          <Board board={board} myTurn={myTurn} onMove={handleMove} gameOver={gameOver} />
+        </>
+      )}
     </div>
   );
 }
