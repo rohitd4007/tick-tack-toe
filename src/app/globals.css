@@ -17,9 +17,10 @@ body {
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(135deg, #e0e7ff 0%, #f8fafc 100%);
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  color: #222;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -38,5 +39,95 @@ a {
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
+  }
+}
+
+.main-bg {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: none;
+}
+
+.ttt-header {
+  margin-top: 40px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.ttt-header h1 {
+  font-size: 2.6rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #2b2d42;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.ttt-container {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.18);
+  padding: 36px 32px 32px 32px;
+  min-width: 340px;
+  max-width: 420px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  backdrop-filter: blur(8px);
+}
+
+.ttt-status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 18px;
+  padding: 0 4px;
+}
+
+.ttt-symbol {
+  font-size: 1.1rem;
+  color: #0070f3;
+  font-weight: 600;
+}
+
+.ttt-status {
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 8px;
+  background: #f1f5ff;
+  color: #2b2d42;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.ttt-status.ttt-turn {
+  background: #e0f7fa;
+  color: #0070f3;
+}
+
+.ttt-status.ttt-wait {
+  background: #fffbe0;
+  color: #e6a700;
+}
+
+.ttt-status.ttt-over {
+  background: #ffe0e0;
+  color: #d90429;
+}
+
+@media (max-width: 600px) {
+  .ttt-container {
+    min-width: 0;
+    max-width: 98vw;
+    padding: 18px 4vw 18px 4vw;
+  }
+
+  .ttt-header {
+    margin-top: 18px;
+    margin-bottom: 12px;
   }
 }

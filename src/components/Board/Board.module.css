@@ -1,6 +1,33 @@
 .board {
     display: grid;
-    grid-template-columns: repeat(3, 100px);
-    gap: 10px;
-    margin: 40px auto;
+    grid-template-columns: repeat(3, minmax(80px, 110px));
+    gap: 18px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.18);
+    padding: 28px;
+    max-width: 380px;
+    justify-content: center;
+    animation: fadeInBoard 0.7s cubic-bezier(.39, .575, .56, 1.000);
+}
+
+@keyframes fadeInBoard {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 500px) {
+    .board {
+        padding: 12px;
+        gap: 10px;
+        max-width: 98vw;
+    }
 }

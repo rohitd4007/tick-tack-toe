@@ -1,18 +1,43 @@
 .cell {
     width: 100px;
     height: 100px;
-    background-color: #f0f0f0;
-    border: 2px solid #ccc;
-    font-size: 2rem;
+    background: rgba(255, 255, 255, 0.7);
+    border: 2.5px solid #e0e0e0;
+    border-radius: 16px;
+    font-size: 2.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    color: #000000;
-    font-weight: 700;
+    color: #222;
+    font-weight: 800;
+    box-shadow: 0 2px 12px rgba(31, 38, 135, 0.08);
+    transition: background 0.18s, border 0.18s, transform 0.12s, color 0.18s;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.cell:hover {
+    background: rgba(0, 112, 243, 0.08);
+    border: 2.5px solid #d97e1c;
+    transform: scale(1.04);
+    color: #b17822;
+    z-index: 2;
 }
 
 .disabled {
-    background-color: #ddd;
+    background: #f3f3f3;
     pointer-events: none;
+    color: #bbb;
+    border: 2.5px solid #e0e0e0;
+    opacity: 0.7;
+}
+
+@media (max-width: 500px) {
+    .cell {
+        width: 70px;
+        height: 70px;
+        font-size: 1.7rem;
+    }
 }
