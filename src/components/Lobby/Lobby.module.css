@@ -89,10 +89,43 @@
 
 .lobby p {
     margin-top: 18px;
-    color: #0070f3;
+    color: #000000;
     font-weight: 500;
     min-height: 24px;
     text-align: center;
+}
+
+.roomCode {
+    color: #f30051;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    padding: 0 4px;
+}
+
+.copiedMsg {
+    color: #1cb34a;
+    font-weight: 700;
+    margin-left: 8px;
+    font-size: 0.98em;
+    animation: fadeInOut 1.2s;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 
 @media (max-width: 500px) {

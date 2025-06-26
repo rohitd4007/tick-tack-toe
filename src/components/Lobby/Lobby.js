@@ -5,6 +5,7 @@ import socket from '../../Utils/socket';
 export default function Lobby({ onGameStart }) {
     const [roomCode, setRoomCode] = useState('');
     const [status, setStatus] = useState('');
+    const [copied, setCopied] = useState(false);
 
     const createRoom = () => {
         socket.emit('createRoom');
@@ -16,7 +17,25 @@ export default function Lobby({ onGameStart }) {
     };
 
     socket.on('roomCreated', ({ roomCode }) => {
-        setStatus(`Room Created: ${roomCode}, waiting for opponent...`);
+        setStatus(
+            <>
+                <span>Room Created: </span>
+                <span
+                    className={styles.roomCode}
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => {
+                        navigator.clipboard.writeText(roomCode);
+                        setCopied(true);
+                        setTimeout(() => setCopied(false), 1200);
+                    }}
+                    title="Click to copy"
+                >
+                    {roomCode}
+                </span>
+                {copied && <span className={styles.copiedMsg}>Copied!</span>}
+                <span>, waiting for opponent...</span>
+            </>
+        );
     });
 
     socket.on('startGame', (data) => {
