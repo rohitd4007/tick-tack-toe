@@ -22,15 +22,15 @@ export default function Lobby({ onGameStart }) {
     useEffect(() => {
         socket.on('roomCreated', ({ roomCode }) => {
             setCreatedRoom(roomCode);
-            setStatus('Room Created, waiting for opponent...');
-            toast.info('Room created! Share the code or link with your friend.');
+            setStatus('🎉 Room Created, waiting for opponent...');
+            toast.info('🎉 Room created! Share the code or link with your friend.');
         });
         socket.on('startGame', (data) => {
             onGameStart(data);
         });
         socket.on('errorMessage', (msg) => {
-            toast.error(msg);
-            setStatus(msg);
+            toast.error('❗ ' + msg);
+            setStatus('❗ ' + msg);
         });
     }, [onGameStart]);
 
@@ -46,7 +46,7 @@ export default function Lobby({ onGameStart }) {
     const handleCopyRoomCode = () => {
         if (createdRoom) {
             navigator.clipboard.writeText(createdRoom);
-            toast.success('Room code copied!');
+            toast.success('📋 Room code copied!');
         }
     };
 
@@ -54,13 +54,13 @@ export default function Lobby({ onGameStart }) {
         if (createdRoom) {
             const shareUrl = `${window.location.origin}?room=${createdRoom}`;
             navigator.clipboard.writeText(shareUrl);
-            toast.success('Shareable link copied!');
+            toast.success('📤 Shareable link copied!');
         }
     };
 
     return (
         <div className={styles.lobby} aria-label="Lobby area">
-            <h2 className={styles.lobbyTitle}>Multiplayer Tic-Tac-Toe</h2>
+            <h2 className={styles.lobbyTitle}><span className="emoji" role="img" aria-label="lobby">💬</span> Multiplayer Tic-Tac-Toe</h2>
             <div className={styles.buttons}>
                 <button className={styles.create} onClick={createRoom} aria-label="Create a new room">Create Room</button>
                 <input
@@ -75,10 +75,10 @@ export default function Lobby({ onGameStart }) {
             {createdRoom && (
                 <div className={styles.roomInfo}>
                     <span className={styles.roomCode} onClick={handleCopyRoomCode} title="Click to copy room code" tabIndex={0} role="button" aria-label="Copy room code">{createdRoom}</span>
-                    <button className={styles.shareBtn} onClick={handleShare} aria-label="Share room link">Share</button>
+                    <button className={styles.shareBtn} onClick={handleShare} aria-label="Share room link">📤 Share</button>
                 </div>
             )}
-            <p className={styles.status}>{status}</p>
+            <p className={styles.status}>{status ? `👤 ${status}` : ''}</p>
         </div>
     );
 }
