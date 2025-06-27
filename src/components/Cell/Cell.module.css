@@ -1,36 +1,38 @@
 .cell {
     width: 100px;
     height: 100px;
-    background: rgba(255, 255, 255, 0.7);
-    border: 2.5px solid #e0e0e0;
-    border-radius: 16px;
-    font-size: 2.5rem;
+    background: rgba(36, 40, 50, 0.92);
+    border: 2.5px solid #a18fff;
+    border-radius: 18px;
+    font-size: 2.7rem;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    color: #222;
-    font-weight: 800;
-    box-shadow: 0 2px 12px rgba(31, 38, 135, 0.08);
-    transition: background 0.18s, border 0.18s, transform 0.12s, color 0.18s;
+    color: #ff6bcb;
+    font-weight: 900;
+    box-shadow: 0 2px 16px #a18fff33, 0 1.5px 6px #ff6bcb22;
+    transition: background 0.18s, border 0.18s, transform 0.12s, color 0.18s, box-shadow 0.18s;
     user-select: none;
     position: relative;
     overflow: hidden;
-}
-
-.cell:hover {
-    background: rgba(0, 112, 243, 0.08);
-    border: 2.5px solid #d97e1c;
-    transform: scale(1.04);
-    color: #b17822;
     z-index: 2;
 }
 
+.cell:hover {
+    background: rgba(161, 143, 255, 0.18);
+    border: 2.5px solid #ff6bcb;
+    transform: scale(1.06) rotate(-2deg);
+    color: #a18fff;
+    box-shadow: 0 4px 24px #ff6bcb44;
+    z-index: 3;
+}
+
 .disabled {
-    background: #f3f3f3;
+    background: #232733;
     pointer-events: none;
-    color: #bbb;
-    border: 2.5px solid #e0e0e0;
+    color: #888;
+    border: 2.5px solid #232733;
     opacity: 0.7;
 }
 

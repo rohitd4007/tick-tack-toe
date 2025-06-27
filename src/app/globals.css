@@ -1,6 +1,14 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #181c24;
+  --foreground: #f8fafc;
+  --card-bg: rgba(24, 28, 36, 0.82);
+  --glass-blur: blur(16px);
+  --primary-gradient: linear-gradient(90deg, #a18fff 0%, #ff6bcb 100%);
+  --accent: #ff6bcb;
+  --accent2: #a18fff;
+  --success: #1cb34a;
+  --error: #ff4d67;
+  --info: #3ecfff;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,10 +25,11 @@ body {
 }
 
 body {
-  background: linear-gradient(135deg, #e0e7ff 0%, #f8fafc 100%);
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  background: var(--background);
+  font-family: 'Poppins', 'Inter', Arial, Helvetica, sans-serif;
   min-height: 100vh;
-  color: #222;
+  color: var(--foreground);
+  position: relative;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -49,33 +58,76 @@ a {
   align-items: center;
   justify-content: flex-start;
   background: none;
+  position: relative;
+  margin-top: 4rem;
+}
+
+/* Floating gradient shapes */
+.bg-shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.5;
+  z-index: 0;
+}
+
+.bg-shape1 {
+  width: 420px;
+  height: 420px;
+  left: -120px;
+  top: -80px;
+  background: var(--primary-gradient);
+}
+
+.bg-shape2 {
+  width: 320px;
+  height: 320px;
+  right: -100px;
+  top: 60px;
+  background: var(--accent);
+}
+
+.bg-shape3 {
+  width: 260px;
+  height: 260px;
+  left: 40vw;
+  bottom: -120px;
+  background: var(--accent2);
 }
 
 .ttt-header {
   margin-top: 40px;
   margin-bottom: 24px;
   text-align: center;
+  z-index: 2;
 }
 
 .ttt-header h1 {
-  font-size: 2.6rem;
-  font-weight: 800;
+  font-size: 1.6rem;
+  font-weight: 900;
   letter-spacing: 1px;
-  color: #2b2d42;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  color: var(--foreground);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .ttt-container {
-  background: rgba(255, 255, 255, 0.7);
-  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.18);
-  padding: 36px 32px 32px 32px;
+  /* background: var(--card-bg); */
+  border-radius: 28px;
+  /* box-shadow: 0 8px 32px rgba(31, 38, 135, 0.22); */
+  padding: 40px 32px 32px 32px;
   min-width: 340px;
-  max-width: 420px;
+  /* max-width: 440px; */
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  backdrop-filter: blur(8px);
+  /* backdrop-filter: var(--glass-blur); */
+  /* border: 2.5px solid var(--accent2); */
+  z-index: 2;
 }
 
 .ttt-status-bar {
@@ -89,44 +141,48 @@ a {
 
 .ttt-symbol {
   font-size: 1.1rem;
-  color: #0070f3;
-  font-weight: 600;
+  color: var(--accent);
+  font-weight: 700;
 }
 
 .ttt-status {
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 700;
   padding: 4px 12px;
   border-radius: 8px;
-  background: #f1f5ff;
-  color: #2b2d42;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--foreground);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  border: 1.5px solid var(--accent2);
 }
 
 .ttt-status.ttt-turn {
-  background: #e0f7fa;
-  color: #0070f3;
+  background: rgba(161, 143, 255, 0.18);
+  color: var(--accent2);
 }
 
 .ttt-status.ttt-wait {
-  background: #fffbe0;
-  color: #e6a700;
+  background: rgba(255, 107, 203, 0.18);
+  color: var(--accent);
 }
 
 .ttt-status.ttt-over {
-  background: #ffe0e0;
-  color: #d90429;
+  background: rgba(255, 77, 103, 0.18);
+  color: var(--error);
 }
 
 @media (max-width: 600px) {
-  .ttt-container {
+  /* .ttt-container {
     min-width: 0;
     max-width: 98vw;
     padding: 18px 4vw 18px 4vw;
-  }
+  } */
 
   .ttt-header {
     margin-top: 18px;
     margin-bottom: 12px;
   }
 }
+
+/* Import Poppins font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap');

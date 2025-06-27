@@ -54,24 +54,27 @@ export default function Home() {
   };
 
   return (
-    <div className="main-bg">
+    <div>
       <header className="ttt-header">
         <h1>Tic-Tac-Toe Online</h1>
       </header>
-      <div className="ttt-container">
-        {!roomData ? (
-          <Lobby onGameStart={handleGameStart} />
-        ) : (
-          <>
-            <div className="ttt-status-bar">
-              <span className="ttt-symbol">You are <b>{symbol}</b></span>
-              <span className={`ttt-status ${gameOver ? 'ttt-over' : myTurn ? 'ttt-turn' : 'ttt-wait'}`}>{status}</span>
-            </div>
-            <Board board={board} myTurn={myTurn} onMove={handleMove} gameOver={gameOver} />
-          </>
-        )}
+
+      <div className="main-bg">
+        <div className="ttt-container">
+          {!roomData ? (
+            <Lobby onGameStart={handleGameStart} />
+          ) : (
+            <>
+              <div className="ttt-status-bar">
+                <span className="ttt-symbol">You are <b>{symbol}</b></span>
+                <span className={`ttt-status ${gameOver ? 'ttt-over' : myTurn ? 'ttt-turn' : 'ttt-wait'}`}>{status}</span>
+              </div>
+              <Board board={board} myTurn={myTurn} onMove={handleMove} gameOver={gameOver} />
+            </>
+          )}
+        </div>
+        <ToastContainer position="top-center" autoClose={1800} hideProgressBar={false} newestOnTop closeOnClick pauseOnFocusLoss draggable pauseOnHover theme="colored" />
       </div>
-      <ToastContainer position="top-center" autoClose={1800} hideProgressBar={false} newestOnTop closeOnClick pauseOnFocusLoss draggable pauseOnHover theme="colored" />
     </div>
   );
 }
