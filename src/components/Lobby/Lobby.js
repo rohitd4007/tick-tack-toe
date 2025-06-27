@@ -8,7 +8,19 @@ export default function Lobby({ onGameStart }) {
     const [roomCode, setRoomCode] = useState('');
     const [status, setStatus] = useState('');
     const [createdRoom, setCreatedRoom] = useState(null);
-    const copiedTimeout = useRef();
+    const inputRef = useRef();
+
+    // On mount, check for ?room= param and auto-populate
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const code = params.get('room');
+        if (code) {
+            setRoomCode(code);
+            setTimeout(() => {
+                if (inputRef.current) inputRef.current.focus();
+            }, 100);
+        }
+    }, []);
 
     useEffect(() => {
         // Clean up listeners on unmount
@@ -64,6 +76,7 @@ export default function Lobby({ onGameStart }) {
             <div className={styles.buttons}>
                 <button className={styles.create} onClick={createRoom} aria-label="Create a new room">Create Room</button>
                 <input
+                    ref={inputRef}
                     placeholder="Enter Room Code"
                     value={roomCode}
                     onChange={(e) => setRoomCode(e.target.value)}
