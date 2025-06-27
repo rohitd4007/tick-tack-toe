@@ -15,6 +15,13 @@ export default function Home() {
   const [status, setStatus] = useState('');
   const [winner, setWinner] = useState(null);
 
+  // Register service worker for PWA
+  useEffect(() => {
+    if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js');
+    }
+  }, []);
+
   useEffect(() => {
     socket.on('updateBoard', ({ board, currentTurn }) => {
       setBoard(board);

@@ -12,13 +12,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Tick Tack Toe",
-  description: "Tick Tack Toe multiplayer online game",
+  title: "Tic-Tac-Toe Online",
+  description: "Play modern multiplayer Tic-Tac-Toe online!",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#a18fff" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <link rel="icon" href="/favicon.ico" />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {children}
       </body>
