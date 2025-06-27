@@ -1,11 +1,38 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from './Lobby.module.css';
 import socket from '../../Utils/socket';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Lobby({ onGameStart }) {
     const [roomCode, setRoomCode] = useState('');
     const [status, setStatus] = useState('');
-    const [copied, setCopied] = useState(false);
+    const [createdRoom, setCreatedRoom] = useState(null);
+    const copiedTimeout = useRef();
+
+    useEffect(() => {
+        // Clean up listeners on unmount
+        return () => {
+            socket.off('roomCreated');
+            socket.off('startGame');
+            socket.off('errorMessage');
+        };
+    }, []);
+
+    useEffect(() => {
+        socket.on('roomCreated', ({ roomCode }) => {
+            setCreatedRoom(roomCode);
+            setStatus('Room Created, waiting for opponent...');
+            toast.info('Room created! Share the code or link with your friend.');
+        });
+        socket.on('startGame', (data) => {
+            onGameStart(data);
+        });
+        socket.on('errorMessage', (msg) => {
+            toast.error(msg);
+            setStatus(msg);
+        });
+    }, [onGameStart]);
 
     const createRoom = () => {
         socket.emit('createRoom');
@@ -16,49 +43,42 @@ export default function Lobby({ onGameStart }) {
         socket.emit('joinRoom', { roomCode: roomCode.trim().toUpperCase() });
     };
 
-    socket.on('roomCreated', ({ roomCode }) => {
-        setStatus(
-            <>
-                <span>Room Created: </span>
-                <span
-                    className={styles.roomCode}
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => {
-                        navigator.clipboard.writeText(roomCode);
-                        setCopied(true);
-                        setTimeout(() => setCopied(false), 1200);
-                    }}
-                    title="Click to copy"
-                >
-                    {roomCode}
-                </span>
-                {copied && <span className={styles.copiedMsg}>Copied!</span>}
-                <span>, waiting for opponent...</span>
-            </>
-        );
-    });
+    const handleCopyRoomCode = () => {
+        if (createdRoom) {
+            navigator.clipboard.writeText(createdRoom);
+            toast.success('Room code copied!');
+        }
+    };
 
-    socket.on('startGame', (data) => {
-        console.log("data", data)
-        onGameStart(data);
-    });
-
-    socket.on('errorMessage', (msg) => {
-        setStatus(msg);
-    });
+    const handleShare = () => {
+        if (createdRoom) {
+            const shareUrl = `${window.location.origin}?room=${createdRoom}`;
+            navigator.clipboard.writeText(shareUrl);
+            toast.success('Shareable link copied!');
+        }
+    };
 
     return (
-        <div className={styles.lobby}>
+        <div className={styles.lobby} aria-label="Lobby area">
+            <h2 className={styles.lobbyTitle}>Multiplayer Tic-Tac-Toe</h2>
             <div className={styles.buttons}>
-                <button className={styles.create} onClick={createRoom}>Create Room</button>
+                <button className={styles.create} onClick={createRoom} aria-label="Create a new room">Create Room</button>
                 <input
                     placeholder="Enter Room Code"
                     value={roomCode}
                     onChange={(e) => setRoomCode(e.target.value)}
+                    className={styles.input}
+                    aria-label="Room code input"
                 />
-                <button className={styles.join} onClick={joinRoom} disabled={!roomCode.trim()}>Join Room</button>
+                <button className={styles.join} onClick={joinRoom} disabled={!roomCode.trim()} aria-label="Join room">Join Room</button>
             </div>
-            <p>{status}</p>
+            {createdRoom && (
+                <div className={styles.roomInfo}>
+                    <span className={styles.roomCode} onClick={handleCopyRoomCode} title="Click to copy room code" tabIndex={0} role="button" aria-label="Copy room code">{createdRoom}</span>
+                    <button className={styles.shareBtn} onClick={handleShare} aria-label="Share room link">Share</button>
+                </div>
+            )}
+            <p className={styles.status}>{status}</p>
         </div>
     );
 }

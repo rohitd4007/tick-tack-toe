@@ -1,9 +1,18 @@
+.boardWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 320px;
+    width: 100%;
+    margin: 0 auto 18px auto;
+}
+
 .board {
     display: grid;
     grid-template-columns: repeat(3, minmax(80px, 110px));
     gap: 18px;
     margin: 0 auto;
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.92);
     border-radius: 20px;
     box-shadow: 0 8px 32px rgba(31, 38, 135, 0.18);
     padding: 28px;
@@ -29,5 +38,9 @@
         padding: 12px;
         gap: 10px;
         max-width: 98vw;
+    }
+
+    .boardWrapper {
+        min-height: 200px;
     }
 }
