@@ -57,6 +57,12 @@ export default function Home() {
     return () => socket.removeAllListeners();
   }, [symbol]);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.pathname === '/') {
+      window.location.replace('/dice');
+    }
+  }, []);
+
   const handleGameStart = ({ roomCode, board, currentTurn, players }) => {
     setRoomData({ roomCode, players });
     setBoard(board);
