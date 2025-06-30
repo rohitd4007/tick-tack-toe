@@ -81,7 +81,7 @@ export default function DicePage() {
                 {rolling ? '...' : (number !== null ? number : '🎲')}
             </button>
             <div style={{ marginTop: 16 }}>
-                <a href="/" style={{
+                <a href="https://tiik-tak-to.netlify.app/" style={{
                     color: '#a18fff',
                     fontWeight: 700,
                     textDecoration: 'none',

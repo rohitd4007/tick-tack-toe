@@ -1,7 +1,7 @@
 {
-    "name": "Tic-Tac-Toe Online",
-    "short_name": "TicTacToe",
-    "description": "Play modern multiplayer Tic-Tac-Toe online!",
+    "name": "Roll Dice",
+    "short_name": "RollDice",
+    "description": "dice",
     "start_url": "/dice",
     "display": "standalone",
     "background_color": "#181c24",

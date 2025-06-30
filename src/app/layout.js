@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Tic-Tac-Toe Online",
+  title: "Roll Dice",
   description: "Play modern multiplayer Tic-Tac-Toe online!",
 };
 
